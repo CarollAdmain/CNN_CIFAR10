@@ -63,7 +63,7 @@ def training():
                       % (step, loss, acc * 100, runtime, (MAX_STEP - step) * runtime / 360000))
                 s_t = time.time()
 
-            if step % 1000 == 0 or step == MAX_STEP - 1:  # 保存检查点
+            if step % 1000 == 0 or step == MAX_STEP - 1:  
                 checkpoint_path = os.path.join(logs_dir, 'model.ckpt')
                 saver.save(sess, checkpoint_path, global_step=step)
 

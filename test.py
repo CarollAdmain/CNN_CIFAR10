@@ -39,12 +39,6 @@ class MyDirEventHandler(FileSystemEventHandler):
         
 # 测试检查点
 def eval():
-#    global event1,event2,answer
-#    print("waiting for socket")
-#    print(socket.gethostbyname(socket.gethostname()))
-        #print("waiting for socket222")
-        #event2.wait()#睡眠自己
-        #time.sleep(1)
         
         tf.reset_default_graph()
         N_CLASSES = 3

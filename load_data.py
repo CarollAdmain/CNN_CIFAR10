@@ -22,7 +22,7 @@ def get_all_files(file_path, is_random=True):
             image_list.append(item_path)
         else:
             raise ValueError('文件夹中有非文件项.')
-
+            
         if item_label == '0':  
             label_list.append(0)
         elif item_label == '1': 

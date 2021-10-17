@@ -8,7 +8,7 @@ def inference(images, n_classes):
     # conv1, shape = [kernel_size, kernel_size, channels, kernel_numbers]
     with tf.variable_scope("conv1") as scope:
         weights = tf.get_variable("weights",
-                                  shape=[3, 3, 3, 16],
+                                  shape=[3, 3, 3, 16]，
                                   dtype=tf.float32,
                                   initializer=tf.truncated_normal_initializer(stddev=0.1, dtype=tf.float32))
         biases = tf.get_variable("biases",
@@ -95,7 +95,6 @@ def losses(logits, labels):
                                                                        labels=labels)
         loss = tf.reduce_mean(cross_entropy)
     return loss
-
 
 def evaluation(logits, labels):
     with tf.variable_scope("accuracy"):
