@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-#D:\\360安全浏览器下载\\果蔬识别\\data\\train
 import tensorflow as tf
 import numpy as np
 import os

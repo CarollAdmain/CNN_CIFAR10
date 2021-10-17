@@ -35,57 +35,6 @@ class MyDirEventHandler(FileSystemEventHandler):
         print("modified:", event)
         eval()
 
-def socket_service_image():
-    global event1,event2,answer
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        #设置成非阻塞
-        #s.setblocking(False)
-        #s.bind(('192.168.43.180', 1902))
-#        s.bind(('192.168.226.1', 1900))
-        s.bind(('192.168.43.253', 1905))
-        s.listen(10)
-    except socket.error as msg:
-        print(msg)
-        sys.exit(1)
-
-    print("Wait for Connection.....................")
-    
-    while True:
-        sock, addr = s.accept()  # addr是一个元组(ip,port)
-        print("已建立连接")
-        deal_image(sock, addr)
-
-        
-def deal_image(sock, addr):
-    global event1,event2,answer
-    print("Accept connection from {0}".format(addr))  # 查看发送端的ip和端口
-    filename = "D:\\ZJUer\\courses\\CNN_Model\\data\\receive\\0_1.jpg" #接收到的图片写入的路径
-    while True:
-        datahead = sock.recv(5)
-        print(datahead)
-        size = datahead.decode()
-        if size=='':
-            break
-        size_int=int(size)
-        inital=0
-        myfile = open(filename,'wb')
-        print("%s 文件打开成功" % filename)
-        while(inital!=size_int):
-            data=sock.recv(1024)
-            myfile.write(data)
-            inital=inital+len(data)
-        myfile.close()
-        event2.set()#唤醒图像识别
-        event1.wait()#睡眠自己
-        #time.sleep(1)
-        print("输出结果为:",answer)
-        send_data = answer
-        sock.send(send_data.encode("gbk"))             
-        event1.clear()#变成False
-
-
 
         
 # 测试检查点
@@ -198,25 +147,11 @@ def eval():
 
 
 
-if __name__ == '__main__':
-    #for i1 in range(0,200):
-   # while(1):
-       # eval()
-        #time.sleep(1) 
-#    event1 = threading.Event()
-#    event2 = threading.Event()
-#    answer="none"    
+if __name__ == '__main__':  
     
     test_dir = 'D:\\guoshushibie\\data\\receive'
     logs_dir = 'logs_2'     # 检查点目录
     path=test_dir
     eval()
-#    print(answer)
-    
-    
-#    t1=threading.Thread(target=socket_service_image,args=())
-#    t2=threading.Thread(target=eval,args=())
-#    t2.start()
-#    t1.start()
 
     
