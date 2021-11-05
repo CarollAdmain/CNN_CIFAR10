@@ -26,10 +26,14 @@ tensorflow 1.X + python3
 
 ## 数据集准备
 
-**CIFAR10:** 一共包含 10 个类别的 RGB 彩色图 片：飞机（ a叩lane ）、汽车（ automobile ）、鸟类（ bird ）、猫（ cat ）、鹿（ deer ）、狗（ dog ）、蛙类（ frog ）、马（ horse ）、船（ ship ）和卡车（ truck ）。图片的尺寸为 32×32 ，数据集中一共有 50000 张训练圄片和 10000 张测试图片。 CIFAR-10 含有的是现实世界中真实的物体，不仅噪声很大，而且物体的比例、 特征都不尽相同，这为识别带来很大困难。 直接的线性模型如 Softmax 在 CIFAR-10 上表现得很差。
+**CIFAR10:** 一共包含 10 个类别的 RGB 彩色图 片，数据集中一共有 50000 张训练圄片和 10000 张测试图片。 CIFAR-10 含有的是现实世界中真实的物体，不仅噪声很大，而且物体的比例、 特征都不尽相同，这为识别带来很大困难。 直接的线性模型如 Softmax 在 CIFAR-10 上表现得很差。
 
 **离线下载：** 
 
+设置cifar10离线下载路劲，运行cifar_download.py,会以X_Y.png格式保存到预设的路径,X为图片类别，Y为图片编号
+```python
+python cifar_download.py
+ ```
  ```python
 CIFAR_DIR ="D:\\ZJUer\\courses\\datasets\\cifar-10-batches-py\\data_batch_5"#数据集路径
 with open(CIFAR_DIR , 'rb') as f:
@@ -40,6 +44,28 @@ print('字典的key名称：',data.keys()) # 输出 dict_keys([b'filenames', b'd
 print('bdata的数据类型',type(data[b'data'])) # 输出 <class 'numpy.ndarray'>
 print('bdata的数据形状',data[b'data'].shape) # 输出 (10000, 3072) 说明有 10000 个样本, 3072个特征
  ```
+ 
+## 模型构建
+
+model.py定义了CNN模型，包括 conv1、pool1 && norm1、conv2、pool2 && norm2、full-connect1、full_connect2、softmax。
+
+提供接口interface(image, n_classes),支持多分类图片训练与预测。
+
+```python
+ def inference(images, n_classes)：
+ ```
+ 
+## 模型训练
+
+trainy.py定义模型训练过程，load_data.py加载数据集中的图片，并且加载到的图片是乱序的。迭代过程中通过保存每一次迭代的临时loss和准确率，每100次迭代和最后一次迭代时，保存模型。模型训练完毕绘制loss曲线和准确率曲线，对模型进行评估。
+
+```python
+python train.py
+ ```
+ 
+ ## 图片分类
+ 
+ test.py利用模型训练过程中得到模型，对CIFAR10测试集中图片进行分类。使用者
 
 ## 结果展示
 ### 测试一
