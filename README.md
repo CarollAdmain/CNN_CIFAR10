@@ -90,6 +90,10 @@ python train.py
  
  ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_3.png)
  
+**batch_size对神经网络的影响:**
+
+通过调整batch_size参数，模型对图片的分类效果有较大的差距。一般来说batch_size越大，训练损失减少的越慢，每个时期训练所需的时间越少。实验也发现，越大的 batch size 使下降方向越准确，震荡越小，batch size 如果过大，则可能会出现局部最优的情况。小的 bath size 引入的随机性更大，难以达到收敛，极少数情况下可能会效果变好。
+ 
  
  ## 图片分类
  
