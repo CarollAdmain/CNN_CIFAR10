@@ -12,6 +12,10 @@ import matplotlib.pyplot as plt
 import sys
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from matplotlib import rcParams
+rcParams['font.family'] = 'simhei'
+import matplotlib
+matplotlib.rcParams['axes.unicode_minus']=False
 #global_iii=0
 
 
@@ -19,9 +23,9 @@ from watchdog.events import FileSystemEventHandler
 def training():
     N_CLASSES = 3
     IMG_SIZE = 208
-    BATCH_SIZE = 16
+    BATCH_SIZE = 64
     CAPACITY = 2000
-    MAX_STEP = 9000
+    MAX_STEP = 500
     LEARNING_RATE = 1e-4
 
     # 测试图片读取
@@ -30,6 +34,9 @@ def training():
 
     sess = tf.Session()
 
+    loss_vec = []
+    acc_vec = []
+    
     train_list = get_all_files(image_dir, True)
     image_train_batch, label_train_batch = get_batch(train_list, IMG_SIZE, BATCH_SIZE, CAPACITY, True)
     train_logits = inference(image_train_batch, N_CLASSES)
@@ -56,14 +63,16 @@ def training():
                 break
 
             _, loss, acc = sess.run([train_op, train_loss, train_acc])
-
-            if step % 100 == 0:  # 实时记录训练过程并显示
+            loss_vec.append(loss)
+            acc_vec.append(acc)
+            
+            if step % 10 == 0:  # 实时记录训练过程并显示
                 runtime = time.time() - s_t
                 print('Step: %6d, loss: %.8f, accuracy: %.2f%%, time:%.2fs, time left: %.2fhours'
                       % (step, loss, acc * 100, runtime, (MAX_STEP - step) * runtime / 360000))
                 s_t = time.time()
 
-            if step % 1000 == 0 or step == MAX_STEP - 1:  
+            if step % 100 == 0 or step == MAX_STEP - 1:  
                 checkpoint_path = os.path.join(logs_dir, 'model.ckpt')
                 saver.save(sess, checkpoint_path, global_step=step)
 
@@ -71,7 +80,20 @@ def training():
         print('Done.')
     finally:
         coord.request_stop()
-
+    
+    plt.plot(loss_vec, 'b')
+    plt.title("loss")
+    plt.xlabel("迭代次数")
+    plt.ylabel("loss")
+    plt.show()
+    
+    plt.plot(acc_vec, 'b--', label="train")
+    plt.title("准确率曲线")
+    plt.xlabel("迭代次数")
+    plt.ylabel("准确率")
+    plt.legend()
+    plt.show()
+    
     coord.join(threads=threads)
     sess.close()
     
