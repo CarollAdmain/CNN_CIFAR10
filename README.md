@@ -73,16 +73,22 @@ python train.py
  **效果评估：**
  
  loss曲线：
+ 
  ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_5.png)
+ 
  准确率曲线：
+ 
  ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_6.png)
  
  2、设置batch_size:512
  
  loss曲线:
+ 
  ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_2.png)
+ 
  准确率曲线：
-  ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_3.png)
+ 
+ ![image](https://github.com/CarrollAdmin/CNN_CIFAR10/blob/master/img/CNN_3.png)
  
  
  ## 图片分类
